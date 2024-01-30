@@ -1,3 +1,12 @@
-body {
-    background-color: skyblue;
-}
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    grid-auto-rows: 20px;
+    grid-row-gap: 10px;
+    grid-column-gap: 16px;
+  }
+  
+  .card {
+    grid-row-end: span 10;
+    margin-bottom: 10px;
+  }
