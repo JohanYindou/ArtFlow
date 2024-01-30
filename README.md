@@ -31,7 +31,7 @@ symfony console make:migration
 Pour appliquer les migrations à la base de données :
 
 ```bash
-symfony console doctrine:mirgations:migrate
+symfony console doctrine:migrations:migrate
 ```
 
 enfin, il faut charger les fixtures générées par faker dans la base de données :
