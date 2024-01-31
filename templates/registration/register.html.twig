@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create an account
+{% endblock %}
+
+{% block body %}
+
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger col-4 m-auto mb-5" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
+	<div class="container vh-100 d-flex align-items-center">
+
+		<div class="form-signing w-100 m-auto">
+
+			{% if app.user %}
+				<div class="alert alert-info text-center" role="alert">
+					<h2>
+						You are already logged in.
+					</h2>
+					<a href="/" class="btn btn-dark">Back to homepage</a>
+				</div>
+			{% else %}
+				{% if error is defined %}
+					<div class="alert alert-danger" role="alert">
+						{{ error }}
+					</div>
+				{% endif %}
+				<h1 class="h3 mb-3 fw-normal text-center">Create an account</h1>
+
+				{% if error is defined %}
+					<div class="alert alert-danger" role="alert">
+						{{ error }}
+					</div>
+				{% endif %}
+
+				{{ form_errors(registrationForm) }}
+
+				{{ form_start(registrationForm, {
+                    attr:{
+                        class: 'col-4 m-auto',
+                    } 
+                }) }}
+
+				<div class="form-floating mb-2">
+					{{ form_widget(registrationForm.email, {
+                            attr: {
+                                class: 'form-control',
+                            },
+                        }) }}
+					<label for="floatingInput">What's your email address ?</label>
+				</div>
+				<!-- END OF EMAIL INPUT -->
+
+				<div class="form-floating mb-2">
+					{{ form_widget(registrationForm.plainPassword, {
+                            attr: {
+                                class: 'form-control',
+                            }
+                        }) }}
+					<label for="floatingPassword">Choose a password</label>
+				</div>
+				<!-- END OF PASSWORD INPUT -->
+
+				<div id="passwordHelpBlock" class="form-text mb-2 visually-hidden">
+					<p class="fw-light text-body-secondary">Your password must contain :<br>
+						- at least 1 uppercase letter<br>
+						- at least 1 lowercase letter<br>
+						- at least 1 number<br>
+						- at least 1 special character<br>- at least 8 characters
+					</p>
+				</div>
+				<!-- END OF PASSWORD HELP BLOCK -->
+
+				<div
+					class="mb-3 form-check">
+					<!-- TODO: add route to terms and conditions -->
+					{{ form_widget(registrationForm.agreeTerms, {
+                            attr: {
+                                class: 'form-check-input',
+                                id: 'floatingCheckbox',
+                            }
+                        }) }}
+					<label class="form-check-label" for="floatingCheckbox">Agree to
+						<a href="#" class="text-decoration-none">terms and conditions</a>
+					</label>
+				</div>
+				<!-- END OF TERMS AND CONDITIONS CHECKBOX -->
+
+				<button class="btn btn-primary w-100 py-2" type="submit">Create account</button>
+
+				{{ form_end(registrationForm) }}
+
+				<div
+					class="text-center mt-3">
+					<!-- TODO: add route to sign in -->
+					<p>Already have an account ?
+						<a href={{ path('app_login') }} class="text-decoration-none">Sign in</a>
+					</p>
+				</div>
+			{% endif %}
+
+			<p class="mt-5 mb-3 text-body-secondary text-center">&copy;
+				{{ 'now'|date('Y') }}</p>
+		</div>
+
+	</div>
+
+	<script>
+		// Regex to check if password contains at least 1 uppercase, 1 lowercase, 1 number and 1 special character and is at least 8 characters long
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+// Regex to check if the 2 passwords match
+const passwordCheckRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+// Get the password input
+const passwordInput = document.getElementById('registration_form_plainPassword');
+
+// Get the password help block
+const passwordHelpBlock = document.getElementById('passwordHelpBlock');
+
+// Display an error message in a div  while the user types his password if it doesn't match the regex
+passwordInput.addEventListener('input', () => {
+if (! passwordRegex.test(passwordInput.value)) {
+passwordInput.classList.add('is-invalid');
+passwordInput.classList.remove('is-valid');
+passwordHelpBlock.classList.remove('visually-hidden');
+} else {
+passwordInput.classList.add('is-valid');
+passwordInput.classList.remove('is-invalid');
+passwordHelpBlock.classList.add('visually-hidden');
+}
+});
+	</script>
+{% endblock %}
