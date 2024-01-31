@@ -8,7 +8,7 @@
     <div class="max-w-5xl mx-auto mt-8 grid grid-cols-3 gap-4">
         {% for image in images %}
         <div class="board-grid justify-center">
-            <a href="{{ path('app_picture') }}" class="bg-white rounded-lg shadow-md hover:shadow-lg card" style="grid-row-end: span 9">
+            <a href="{{ path('app_picture', {'id': image.id}) }}" class="bg-white rounded-lg shadow-md hover:shadow-lg card" style="grid-row-end: span 9">
                 <div class="flex flex-col">
 
                     {# IMAGE #}
