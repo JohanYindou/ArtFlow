@@ -14,5 +14,9 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+<<<<<<< HEAD
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+=======
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
+>>>>>>> 8c35dfb598c8e59925bd0567103d0b723f4dbfee
 ];
