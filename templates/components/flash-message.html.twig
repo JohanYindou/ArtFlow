@@ -1,0 +1,13 @@
+{% for message in app.flashes('like') %}
+	<div class="position-fixed z-3 top-0 end-0 m-3 shadow alert alert-success alert-dismissible fade show" role="alert">
+		{{ message }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+{% endfor %}
+
+{% for message in app.flashes('unlike') %}
+	<div class="position-fixed z-3 top-0 end-0 m-3 shadow alert alert-danger alert-dismissible fade show" role="alert">
+		{{ message }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+{% endfor %}
