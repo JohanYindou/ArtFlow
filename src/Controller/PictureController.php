@@ -24,14 +24,14 @@ class PictureController extends AbstractController
         ]);
 
         $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment = $form->getData();
-            $comment->setContent($form->get('content')->getData());
-            $comment->setUser($form->get('user')->getData());
-            $comment->setImage($form->get('image')->getData());
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment = $commentForm->getData();
+            $comment->setContent($commentForm->get('content')->getData());
+            $comment->setUser($this->getUser());
+            $comment->setImage($image);
             $comment->setCreatedAt(new \DateTime());
 
             $entityManager->persist($comment);
@@ -42,7 +42,7 @@ class PictureController extends AbstractController
 
         return $this->render('picture/index.html.twig', [
             'image' => $image,
-            'form' => $form->createView(),
+            'commentForm' => $commentForm->createView(),
         ]);
     }
 }
