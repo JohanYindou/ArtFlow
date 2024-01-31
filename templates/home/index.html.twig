@@ -5,17 +5,23 @@
 {% endblock %}
 
 {% block body %}
-    <div class="max-w-5xl mx-auto mt-8">
+    <div class="max-w-5xl mx-auto mt-8 grid grid-cols-3 gap-4">
+        {% for image in images %}
         <div class="board-grid justify-center">
             <a href="{{ path('app_picture') }}" class="bg-white rounded-lg shadow-md cursor-pointer hover:shadow-lg card" style="grid-row-end: span 9">
                 <div class="flex flex-col">
 
                     {# IMAGE #}
-                    <img class="w-full overflow-hidden rounded-t-lg" src="https://cdn.pixabay.com/photo/2015/11/16/16/28/bird-1045954_960_720.jpg" />
+                    {% if image.path is defined %}
+                        
+                        <img class="w-full overflow-hidden rounded-t-lg" src={{ image.path }}  alt={{ image.title }} /> 
+                        {% else %}
+                        pas de chemin d'image défini.
+                    {% endif %}
                     <div class="flex justify-between items-center p-2 text-gray-800">
 
                         {# NAME #}
-                        <p class="text-md font-bold">The bird</p>
+                        <p class="text-md font-bold">{{ image.title }}</p> 
                         <div class="flex items-center justify-between text-sm text-gray-500 space-x-1">
 
                             {# NUMBER OF COMMENTS #}
@@ -28,5 +34,6 @@
                 </div>
             </a>
         </div>
+        {% endfor %}
     </div>
 {% endblock %}
