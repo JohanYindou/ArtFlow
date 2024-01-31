@@ -9,7 +9,7 @@
         <div class="flex bg-white rounded-lg shadow-md hover:shadow-lg">
             <div class="relative w-full p-3">
                 <img class="w-full h-auto rounded-lg" src="{{ image.path}}" />
-                <a class="absolute top-6 right-6 p-2 bg-white rounded-full hover:bg-gray-100" href="https://cdn.pixabay.com/photo/2015/11/16/16/28/bird-1045954_960_720.jpg" download="nom-du-fichier.jpg">
+                <a class="absolute top-6 right-6 p-2 bg-white rounded-full hover:bg-gray-100" href="{{ image.path}}" download="nom-du-fichier.jpg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                     </svg>
@@ -18,26 +18,49 @@
 
             <div class="flex flex-col w-2/3 p-2 text-gray-800">
                 <p class="mb-2 text-3xl font-bold leading-6">{{ image.title }}</p>
-                <p class="mb-8 text-sm font-medium text-gray-500">by {{ image.user.username }}</p>
-                <div class="flex flex-col gap-5 text-sm text-gray-500">
-                    {# <form action="#" method="post">
-                        <label for="submit" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Submit</label>
-                        <div class="relative">
-                            <input type="search" id="submit" class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add a comment" required />
-                            <button type="submit" class="absolute end-2.5 bottom-2.5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-                        </div>
-                    </form> #}
-                    {{ form_start(form) }}
-                        {{ form_row(form.content) }}
-                        {{ form_row(form.user) }}
-                        {{ form_row(form.image) }}
+                <div class="flex justify-between items-center mb-8">
+                    <p class="text-sm font-medium text-gray-500">by {{ image.user.username }}</p>
+                    <div class="flex gap-1">
+                    <span>{{ image.likes|length }}</span>
+                    {# LIKE FORM #}
+                    <form action="{{ path('app_like', {'id': image.id}) }}" method="post">
+                        <input type="hidden" name="image" value="{{ image.id }}">
                         <button type="submit">
-                            Submit
-                        </button>
-                    {{ form_end(form) }}
+                            {% set hasLiked = false %}
 
+                            {% for like in image.likes %}
+                                {% if like.user == app.user %}
+                                    {% set hasLiked = true %}
+                                {% endif %}
+                            {% endfor %}
+                            
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="{{ hasLiked ? 'red' : 'currentColor' }}" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    fill="{{ hasLiked ? 'red' : 'none' }}"
+                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+                            </svg>
+                        </button>
+                    </form>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-4 text-sm text-gray-500">
+                    {# COMMENT FORM #}
+                    {{ form_start(commentForm) }}
+                        <div class="relative">
+                            {{ form_row(commentForm.content, {
+                                'label': false,
+                                'attr': {
+                                    'class': 'block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+                                    'placeholder': 'Add a comment'
+                                }
+                            }) }}
+                            <button type="submit" class="absolute end-2 bottom-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                        </div>
+                    {{ form_end(commentForm) }}
+                    {# COMMENTS #}
                     {% for item in image.comments %}
-                        <div class="flex gap-1">
+                        <div class="flex gap-2">
                             <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="{{ item.user.profilePicture}}" alt="" />
                             <div class="flex flex-col">
                                 <p class="font-bold">{{ item.user.username }}</p>
