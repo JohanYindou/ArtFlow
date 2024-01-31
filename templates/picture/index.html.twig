@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {# {{ picture.title }}  #}
+    {{ image.title|slice(0, 8) }}...
 {% endblock %}
 
 {% block body %}
     <div class="max-w-5xl mx-auto mt-4 rounded-lg">
         <div class="flex bg-white rounded-lg shadow-md hover:shadow-lg">
             <div class="relative w-full p-3">
-                <img class="w-full h-auto rounded-lg" src="https://cdn.pixabay.com/photo/2015/11/16/16/28/bird-1045954_960_720.jpg" />
+                <img class="w-full h-auto rounded-lg" src="{{ image.path}}" />
                 <a class="absolute top-6 right-6 p-2 bg-white rounded-full hover:bg-gray-100" href="https://cdn.pixabay.com/photo/2015/11/16/16/28/bird-1045954_960_720.jpg" download="nom-du-fichier.jpg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -17,32 +17,34 @@
             </div>
 
             <div class="flex flex-col w-2/3 p-2 text-gray-800">
-                <p class="mb-2 text-3xl font-bold leading-6">A lion with Dan</p>
-                <p class="mb-8 text-sm font-medium text-gray-500">by John Doe</p>
+                <p class="mb-2 text-3xl font-bold leading-6">{{ image.title }}</p>
+                <p class="mb-8 text-sm font-medium text-gray-500">by {{ image.user.username }}</p>
                 <div class="flex flex-col gap-5 text-sm text-gray-500">
-                    <form action="#" method="post">
+                    {# <form action="#" method="post">
                         <label for="submit" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Submit</label>
                         <div class="relative">
                             <input type="search" id="submit" class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add a comment" required />
                             <button type="submit" class="absolute end-2.5 bottom-2.5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                         </div>
-                    </form>
+                    </form> #}
+                    {{ form_start(form) }}
+                        {{ form_row(form.content) }}
+                        {{ form_row(form.user) }}
+                        {{ form_row(form.image) }}
+                        <button type="submit">
+                            Submit
+                        </button>
+                    {{ form_end(form) }}
 
-                    <div class="flex gap-1">
-                        <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://randomuser.me/api/portraits/men/94.jpg" alt="" />
-                        <div class="flex flex-col">
-                            <p class="font-bold">John Doe</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi excepturi rem neque libero beatae, suscipit sunt veritatis. Totam amet ratione vel! Aliquid reprehenderit quod, natus suscipit magnam perspiciatis similique fugit!</p>
+                    {% for item in image.comments %}
+                        <div class="flex gap-1">
+                            <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="{{ item.user.profilePicture}}" alt="" />
+                            <div class="flex flex-col">
+                                <p class="font-bold">{{ item.user.username }}</p>
+                                <p>{{ item.content }}</p>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="flex gap-1">
-                        <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://randomuser.me/api/portraits/men/94.jpg" alt="" />
-                        <div class="flex flex-col">
-                            <p class="font-bold">John Doe</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi excepturi rem neque libero beatae, suscipit sunt veritatis. Totam amet ratione vel! Aliquid reprehenderit quod, natus suscipit magnam perspiciatis similique fugit!</p>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
