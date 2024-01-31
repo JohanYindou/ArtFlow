@@ -6,7 +6,7 @@
 
 {% block body %}
 	{# {{dump(user) }}
-	{{ dump(user.images[0]) }} #}
+		{{ dump(user.images[0]) }} #}
 	<div class="container max-w-5xl mx-auto py-8">
 		<div class="grid grid-cols-4 sm:grid-cols-12 gap-6">
 			{# PROFILE #}
@@ -16,7 +16,7 @@
 						<img src={{user.profilePicture}} class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"/>
 						<h1 class="text-xl font-bold">{{user.username}}</h1>
 						<div class="mt-6 flex flex-wrap gap-4 justify-center">
-							<a href="#" class="text-white py-2 px-4 rounded" style="background-color: #ff5e5e">Edit Profile</a>
+							<button href="#" class="text-white py-2 px-4 rounded" style="background-color: #ff5e5e">Edit Profile</button>
 						</div>
 					</div>
 				</div>

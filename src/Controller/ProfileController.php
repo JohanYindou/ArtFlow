@@ -24,4 +24,21 @@ class ProfileController extends AbstractController
             'user' => $user,
         ]);
     }
+
+    #[Route('/edit-profile', name: 'app_edit-profile')]
+    public function edit(
+        Request $request,
+    ): Response
+    {
+        $user = $this->getUser();
+        // Faire comme dans Picture controller
+
+        if (!$user) {
+            // Rediriger l'utilisateur vers la page de connexion s'il n'est pas connecté
+            return $this->redirectToRoute('app_login');
+        }
+        return $this->render('profile/edit-profile.html.twig', [
+            'user' => $user,
+        ]);
+    }
 }
