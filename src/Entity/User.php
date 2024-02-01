@@ -33,10 +33,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description = null;
+    private ?string $description = "Ajoutez une description.";
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profilePicture = null;
+    private ?string $profilePicture = 'https://via.placeholder.com/640x480.png/666?text=Default';
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
