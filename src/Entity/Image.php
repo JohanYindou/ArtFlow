@@ -233,5 +233,4 @@ class Image
 
         return $this;
     }
-
 }
