@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Image;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,15 +16,16 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods: ['GET'])]
     public function index(
-        ImageRepository $imageRepository
+        ImageRepository $imageRepository,
+        EntityManagerInterface $em
     ): Response
     {
-
+        $selectedCategory = $em->getRepository(Category::class)->find(1);
         $images = $imageRepository->findAll();
 
         return $this->render('home/index.html.twig', [
             'images' => $images,
-
+            'selectedCategory' => $selectedCategory,
         ]);
     }
 }
