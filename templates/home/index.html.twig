@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="max-w-5xl mx-auto mt-8 grid grid-cols-3 gap-4">
+    <div class="max-w-5xl mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
         {% for image in images %}
         <div class="board-grid justify-center">
             <a href="{{ path('app_picture', {'id': image.id}) }}" class="bg-white rounded-lg shadow-md hover:shadow-lg card" style="grid-row-end: span 9">
