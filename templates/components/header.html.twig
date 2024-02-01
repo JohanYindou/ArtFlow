@@ -1,17 +1,24 @@
 <header class="p-4">
     <div class="flex justify-between items-center max-w-5xl mx-auto">
-
         {# LOGO + HOME LINK #}
         <a href="{{ path('app_home') }}">
             <img class="w-14 h-14 rounded-full" src="/images/logo.png" alt="" />
         </a>
-
-        {# MY PROFILE LINK #}
-        <a class="flex items-center gap-2" href="{{ path('app_profile') }}">
-            <p>My Profile</p>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-            </svg>
-        </a>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {# MY PROFILE LINK + LOGOUT #}
+        <div class="flex items-center gap-4">
+            <a class="flex items-center gap-2" href="{{ path('app_profile') }}">
+                <img class="w-10 h-10 rounded-full" src="{{ app.user.getProfilePicture() }}" alt="" />
+                <span class="text-sm font-medium">{{ app.user.getUsername() }}</span>
+            </a>
+        <a href="{{ path('app_logout') }}" class="text-sm font-medium">Logout</a>        
+        </div>
+        {% else %}
+        {# LOGIN + REGISTER LINK #}
+        <div class="flex gap-4">
+            <a href="{{ path('app_login') }}" class="text-sm font-medium">Login</a>
+            <a href="{{ path('app_register') }}" class="text-sm font-medium">Register</a>
+        </div>
+        {% endif %}
     </div>
 </header>
