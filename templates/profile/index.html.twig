@@ -6,9 +6,10 @@
 
 {% block body %}
 	{# {{dump(user) }}
-		{{ dump(user.images[0]) }} #}
+	{{dump(user.images[0]) }} #}
 	<div class="container max-w-5xl mx-auto py-8">
-		<div class="grid grid-cols-4 sm:grid-cols-12 gap-6">
+		<div
+			class="grid grid-cols-4 sm:grid-cols-12 gap-6">
 			{# PROFILE #}
 			<div class="col-span-4 sm:col-span-3">
 				<div class="bg-white shadow rounded-lg p-6">
@@ -23,7 +24,8 @@
 			</div>
 
 			<div class="col-span-4 sm:col-span-9">
-				<div class="bg-white shadow rounded-lg p-6">
+				<div
+					class="bg-white shadow rounded-lg p-6">
 					{# ABOUT ME #}
 					<h2 class="text-xl font-bold mb-4">About Me</h2>
 					<p class="text-gray-700">{{user.description}}</p>
@@ -62,7 +64,9 @@
 					<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
 						{% for img in user.images %}
 							<div>
-								<img class="h-auto max-w-full rounded-lg" src="{{ img.path }}" alt="{{ img.title }}"/>
+								<a href="{{path('app_picture',{'id':img.id})}}">
+									<img class="h-auto max-w-full rounded-lg" src="{{ img.path }}" alt="{{ img.title }}"/>
+								</a>
 							</div>
 						{% endfor %}
 					</div>
