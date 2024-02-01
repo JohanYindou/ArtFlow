@@ -4,12 +4,12 @@
 
 ## Description
 
-Artflow est un projet réalisé en groupe lors la formation CDA chez PrepAvenir. Cette application est une galerie d'images qui permet de voir, partager, télécharger et comenter des images.
+Artflow est un projet réalisé en groupe lors de la formation CDA chez PrepAvenir. Cette application est une galerie d'images qui permet de voir, partager, télécharger et commenter des images.
 
 ## Installation
 
-Pour installer Artflow, vous avez besoin de composer et symfony.
-Après avoir cloné le repository sur votre machine locale, ouvrez un terminal et tappez les ligne de code suivante :
+Pour installer Artflow, vous avez besoin de Composer et Symfony.
+Après avoir cloné le dépôt sur votre machine locale, ouvrez un terminal et tapez les lignes de code suivantes :
 
 ```bash
 composer install
@@ -25,7 +25,7 @@ Si vous souhaitez changer SQLite en une autre base de données, modifiez le fich
 symfony console doctrine:database:create
 ```
 
-ensuite, pour créer les migrations :
+Ensuite, pour créer les migrations :
 
 ```bash
 symfony console make:migration
@@ -37,7 +37,7 @@ Pour appliquer les migrations à la base de données :
 symfony console doctrine:migrations:migrate
 ```
 
-enfin, il faut charger les fixtures générées par faker dans la base de données :
+Enfin, il faut charger les fixtures générées par Faker dans la base de données :
 
 ```bash
 symfony console doctrine:fixtures:load
@@ -45,7 +45,7 @@ symfony console doctrine:fixtures:load
 
 ## Architecture
 
-Artflow est une application monolithique développée avec Symfony 5.7 L'architecture utilisée est basée sur un pattern MVC (Model-View-Controller). Vous pouvez trouver les sources sur le [GitHub](https://github.com/JohanYindou/ArtFlow).
+Artflow est une application monolithique développée avec Symfony 5.7. L'architecture utilisée est basée sur un pattern MVC (Model-View-Controller). Vous pouvez trouver les sources sur le [GitHub](https://github.com/JohanYindou/ArtFlow).
 
 L'architecture de l'application est basée sur une architecture monolithique avec une seule base de données.
 
@@ -58,6 +58,8 @@ Le repertoire `src/Security` contient les classes de securite de l'application. 
 Le repertoire `templates` contient les templates de l'application. Les templates sont divisés en sous-répertoires qui correspondent aux différentes parties de l'application.
 
 ## Auteurs
+
+Ce projet est reéalisé par :
 
 - Johan Yindou - [GitHub](https://github.com/JohanYindou)
 - Alexandre Viegas - [GitHub](https://github.com/rAlexandreViegas)
