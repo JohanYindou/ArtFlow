@@ -20,7 +20,7 @@ class Image
     private ?string $title = null;
 
     #[ORM\Column(length: 150)]
-    private ?string $path = null;
+    private ?string $path = '/uploads/images/cover.jpg';
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
@@ -233,5 +233,4 @@ class Image
 
         return $this;
     }
-
 }

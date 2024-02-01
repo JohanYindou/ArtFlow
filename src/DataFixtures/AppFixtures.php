@@ -26,8 +26,9 @@ class AppFixtures extends Fixture
             $user->setUsername($faker->userName)
                 ->setEmail($faker->email)
                 ->setPassword('$2y$10$OorxAF.9ldO.I99Ygq.3neTHPWbsHYmwIJEzc/CbCH2IevLYxcVQ6')
+                ->setRoles(['ROLE_USER'])
                 ->setDescription($faker->text)
-                ->setProfilePicture($faker->imageUrl())
+                ->setProfilePicture('/uploads/users/' . (rand(0, 1) ? 'default-1.jpg' : 'default-2.jpg'))
                 ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'))
                 ->setUpdatedAt($faker->dateTimeBetween($user->getCreatedAt(), 'now'));
 
@@ -40,7 +41,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 30; $i++) {
             $image = new Image();
             $image->setTitle($faker->sentence)
-                ->setPath($faker->imageUrl())
+                ->setPath('/uploads/images/cover.jpg')
                 ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'))
                 ->setUpdatedAt($faker->dateTimeBetween($image->getCreatedAt(), 'now'));
 
