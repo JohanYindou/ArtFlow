@@ -28,6 +28,10 @@ class PictureController extends AbstractController
         $commentForm->handleRequest($request);
 
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            if (!$this->getUser()) {
+                return $this->redirectToRoute('app_login');
+            }
+
             $comment = $commentForm->getData();
             $comment->setContent($commentForm->get('content')->getData());
             $comment->setUser($this->getUser());
