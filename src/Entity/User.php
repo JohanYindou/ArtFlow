@@ -36,7 +36,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $description = "Ajoutez une description.";
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profilePicture = 'https://via.placeholder.com/640x480.png/666?text=Default';
+
+    private ?string $profilePicture = '/uploads/users/default.png';
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
@@ -185,7 +186,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    
+
 
     /**
      * @return Collection<int, Like>
