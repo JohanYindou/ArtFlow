@@ -20,13 +20,13 @@ class AppFixtures extends Fixture
         $faker = Factory::create();
 
         // Création de plusieurs utilisateurs
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $user = new User();
             $user->setUsername($faker->userName)
                 ->setEmail($faker->email)
-                ->setPassword($faker->password)
+                ->setPassword('$2y$10$OorxAF.9ldO.I99Ygq.3neTHPWbsHYmwIJEzc/CbCH2IevLYxcVQ6')
                 ->setDescription($faker->text)
-                ->setProfilePicture($faker->imageUrl(150, 150))
+                ->setProfilePicture($faker->imageUrl())
                 ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'))
                 ->setUpdatedAt($faker->dateTimeBetween($user->getCreatedAt(), 'now'));
 
@@ -35,7 +35,7 @@ class AppFixtures extends Fixture
         }
 
         // Création de plusieurs images
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $image = new Image();
             $image->setTitle($faker->sentence)
                 ->setPath($faker->imageUrl())
@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
         }
 
         // Création de plusieurs likes
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 60; $i++) {
             $like = new Like();
             $like->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'));
 
@@ -64,7 +64,7 @@ class AppFixtures extends Fixture
         }
 
         // Création de plusieurs commentaires
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 60; $i++) {
             $comment = new Comment();
             $comment->setContent($faker->sentence)
                 ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'));
@@ -84,7 +84,7 @@ class AppFixtures extends Fixture
                 ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'));
 
             // Associez une catégorie à plusieurs images
-            for ($j = 0; $j < 3; $j++) {
+            for ($j = 0; $j < 1; $j++) {
                 $image = $this->getReference('image_' . $faker->numberBetween(0, 9));
                 $category->setImage($image);
             }
