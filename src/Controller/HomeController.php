@@ -19,18 +19,23 @@ class HomeController extends AbstractController
     public function index(
         ImageRepository $imageRepository,
         CategoryRepository $categoryRepository,
+        Request $request,
         EntityManagerInterface $em
     ): Response
     {
         $categories = $categoryRepository->findAll();
 
-        //$selectedCategory = $em->getRepository(Category::class)->find(1);
-        //$images = $imageRepository->findByCategories($selectedCategory);
-        $images = $imageRepository->findAll();
+        $categoryId = $request->query->get('category');
+        $selectedCategory = $categoryId ? $categoryRepository->find($categoryId)
+        : null;
+
+        $images = $selectedCategory ? $imageRepository->findByCategory($selectedCategory)
+        : $imageRepository->findAll();
+        //$images = $imageRepository->findAll();
 
         return $this->render('home/index.html.twig', [
             'images' => $images,
-            //'selectedCategory' => $selectedCategory,
+            'selectedCategory' => $selectedCategory,
             'categories' => $categories,
         ]);
     }
