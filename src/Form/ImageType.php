@@ -40,7 +40,7 @@ class ImageType extends AbstractType
                 'expanded' => true,
                 'choice_label' => 'name',
                 'attr' => [
-                    'class' => 'mb-3',
+                    'class' => 'flex items-center gap-2 mb-3',
                 ]
             ]);
     }
