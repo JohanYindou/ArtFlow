@@ -5,25 +5,27 @@
 {% endblock %}
 
 {% block body %}
-	{{ form_start(userForm, {'attr': {'data-turbo-action': 'replace', 'data-turbo-frame': 'target', 'class': 'needs-validation', 'novalidate': ''}}) }}
-	<div class="mb-3">
-		<label for="username" class="form-label">Username</label>
-		{{ form_widget(userForm.username, {'attr': {'class': 'form-control', 'id': 'username', 'required': ''}}) }}
-		<div class="invalid-feedback">
-			Please choose a username.
-		</div>
-	</div>
+    <div class="container w-50 mt-5 p-3 rounded shadow">
+        {{ form_start(userForm, {'attr': {'data-turbo-action': 'replace', 'data-turbo-frame': 'target', 'class': 'needs-validation', 'novalidate': ''}}) }}
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                {{ form_widget(userForm.username, {'attr': {'class': 'form-control', 'id': 'username', 'required': ''}}) }}
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
+            </div>
 
-	<div class="mb-3">
-		<label for="description" class="form-label">Description</label>
-		{{ form_widget(userForm.description, {'attr': {'class': 'form-control', 'id': 'description', 'required': ''}}) }}
-		<div class="invalid-feedback">
-			Please write a description.
-		</div>
-	</div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                {{ form_widget(userForm.description, {'attr': {'class': 'form-control', 'id': 'description', 'required': ''}}) }}
+                <div class="invalid-feedback">
+                    Please write a description.
+                </div>
+            </div>
 
-	<button class="btn btn-primary" type="submit">Save</button>
-	<a href="/profile" class="btn btn-secondary">Cancel</a>
-	{{ form_end(userForm) }}
+            <button class="btn btn-primary bg-primary" type="submit">Save</button>
+            <a href="/profile" class="btn btn-secondary">Cancel</a>
+	    {{ form_end(userForm) }}
+    </div>
 {% endblock %}
 
