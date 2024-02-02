@@ -35,6 +35,18 @@ class AppFixtures extends Fixture
             $users[] = $user;
         }
 
+        // Categories
+        $categories = [];
+        $categoriesList = ['Art', 'Architecture', 'Cinema', 'Food', 'Music', 'Travel'];
+        for ($i = 0; $i < 6; $i++) {
+            $category = new Category();
+            $category->setName($categoriesList[$i])
+                ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'));
+
+            $manager->persist($category);
+            $categories[] = $category;
+        }
+
         // Images
         $images = [];
         for ($i = 0; $i < 30; $i++) {
@@ -47,6 +59,10 @@ class AppFixtures extends Fixture
             // Associate an image with a user
             $user = $faker->randomElement($users);
             $image->setUser($user);
+
+            // Associate an image with a random category
+            $category = $faker->randomElement($categories);
+            $image->addCategory($category);
 
             $manager->persist($image);
             $images[] = $image;
@@ -77,24 +93,6 @@ class AppFixtures extends Fixture
             $comment->setUser($user)->setImage($image);
 
             $manager->persist($comment);
-        }
-
-        // Categories
-        $categories = [];
-        $categoriesList = ['Art', 'Architecture', 'Cinema', 'Food', 'Music', 'Travel'];
-        for ($i = 0; $i < 5; $i++) {
-            $category = new Category();
-            $category->setName($faker->randomElement($categoriesList))
-                ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'));
-
-            // Associate a category with multiple images
-            for ($j = 0; $j < 1; $j++) {
-                $image = $faker->randomElement($images);
-                $category->addImage($image);
-            }
-
-            $manager->persist($category);
-            $categories[] = $category;
         }
 
         $manager->flush();
