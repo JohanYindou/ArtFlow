@@ -57,6 +57,26 @@ Le repertoire `src/Security` contient les classes de securite de l'application. 
 
 Le repertoire `templates` contient les templates de l'application. Les templates sont divisés en sous-répertoires qui correspondent aux différentes parties de l'application.
 
+## Fonctionalitées
+
+Depuis la page Home vous pouver acceder aux fonctionnalités de l'application suivantes :
+
+- Créer et Se connecter à l'application
+- Aller sur son profil (avec son nom et sa description et ses images)
+- Upload une image
+- Afficher une image
+- Filtrer les images en fonction de leur catégories
+
+Depuis la page Profile vous pouver acceder aux fonctionnalités de l'application suivantes :
+
+- Modifier son username et votre description de profile.
+- Afficher toutes ses images.
+
+Depuis la page Image vous pouver acceder aux fonctionnalités de l'application suivantes :
+
+- Ajouter des commentaires sur une image.
+- Voir les commentaires d'une image avec le nom de l'auteur.
+
 ## Auteurs
 
 Ce projet est reéalisé par :
