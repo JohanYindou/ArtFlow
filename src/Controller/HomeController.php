@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Image;
+use App\Entity\Tag;
+use App\Form\TagType;
 use App\Repository\CategoryRepository;
 use App\Repository\ImageRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

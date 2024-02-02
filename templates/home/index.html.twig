@@ -8,7 +8,7 @@
     <div class="max-w-5xl mx-auto mt-8">
             {# Category Filter Form #}
             <form method="get">
-                <label for="category">Filter by Category:</label>
+                <label for="category" class="p-2">Filter by Category:</label>
                 <select name="category" id="category">
                     <option value="">All Categories</option>
                     {% for category in categories %}
@@ -54,11 +54,11 @@
                                 </svg>
                             </div>
                         </div>
-                        {# Displaying Categories #}
+                        {# Displaying tag #}
                         <div>
-                            <strong class="p-2">Categories:</strong>
-                            {% for category in image.categories %}
-                                {{ category.name }}
+                            <strong class="p-2">tag:</strong>
+                            {% for tag in image.tags %}
+                                {{ tag.name }}
                             {% endfor %}
                         </div>
                     </div>
