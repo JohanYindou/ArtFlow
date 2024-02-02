@@ -24,12 +24,13 @@ class HomeController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
 
-        $selectedCategory = $em->getRepository(Category::class)->find(1);
-        $images = $imageRepository->findByCategory($selectedCategory);
+        //$selectedCategory = $em->getRepository(Category::class)->find(1);
+        //$images = $imageRepository->findByCategories($selectedCategory);
+        $images = $imageRepository->findAll();
 
         return $this->render('home/index.html.twig', [
             'images' => $images,
-            'selectedCategory' => $selectedCategory,
+            //'selectedCategory' => $selectedCategory,
             'categories' => $categories,
         ]);
     }

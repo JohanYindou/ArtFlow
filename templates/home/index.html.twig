@@ -12,8 +12,10 @@
                 <select name="category" id="category">
                     <option value="">All Categories</option>
                     {% for category in categories %}
-                        <option value="{{ category.id }}" {% if selectedCategory and category.id == selectedCategory.id %}selected{% endif %}>
-                        
+                        <option value="{{ category.id }}" 
+                        {# {% if selectedCategory and category.id == selectedCategory.id %} 
+                        selected{% endif %}#}>
+
                             {{ category.name }}
                         </option>
                     {% endfor %}
