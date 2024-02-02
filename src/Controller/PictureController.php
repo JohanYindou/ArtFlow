@@ -100,4 +100,15 @@ class PictureController extends AbstractController
             'imageForm' => $imageForm,
         ]);
     }
+
+    #[Route('/delete-picture/{id}', name: 'app_delete_picture', methods: ['GET', 'POST'])]
+    public function delete(
+        Image $image,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $entityManager->remove($image);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home');
+    }
 }
