@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Comment;
+use App\Form\ImageType;
 use App\Form\CommentType;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,6 +49,55 @@ class PictureController extends AbstractController
         return $this->render('picture/index.html.twig', [
             'image' => $image,
             'commentForm' => $commentForm->createView(),
+        ]);
+    }
+
+    #[Route('/add-picture', name: 'app_add_picture', methods: ['GET', 'POST'])]
+    public function add(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $user = $this->getUser();
+
+        $image = new Image();
+        $imageForm = $this->createForm(ImageType::class, $image);
+        $imageForm->handleRequest($request);
+
+
+        if ($imageForm->isSubmitted() && $imageForm->isValid()) {
+            $image = $imageForm->getData();
+
+            $image->setTitle($imageForm->get('title')->getData());
+
+            $file = $imageForm->get('path')->getData();
+            $originalFileName = $file->getClientOriginalName();
+            $file->move(
+                $this->getParameter('upload_images'),
+                $originalFileName
+            );
+            $image->setPath('/uploads/images/' . $originalFileName);
+
+
+            foreach ($imageForm->get('categories')->getData() as $category) {
+                $image->addCategory($category);
+            }
+
+            $image->setCreatedAt(new \DateTime());
+            $image->setUpdatedAt(new \DateTime());
+            $image->setUser($user);
+
+            $entityManager->persist($image);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('picture/add.html.twig', [
+            'imageForm' => $imageForm,
         ]);
     }
 }
