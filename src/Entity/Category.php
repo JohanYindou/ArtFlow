@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,9 +22,13 @@ class Category
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'categories')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Image $image = null;
+    #[ORM\ManyToMany(targetEntity: Image::class, mappedBy: 'categories')]
+    private Collection $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,14 +59,29 @@ class Category
         return $this;
     }
 
-    public function getImage(): ?Image
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getImages(): Collection
     {
-        return $this->image;
+        return $this->images;
     }
 
-    public function setImage(?Image $image): static
+    public function addImage(Image $image): static
     {
-        $this->image = $image;
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            $image->removeCategory($this);
+        }
 
         return $this;
     }
