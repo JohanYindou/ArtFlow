@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Image;
+use App\Repository\CategoryRepository;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -15,15 +17,26 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods: ['GET'])]
     public function index(
-        ImageRepository $imageRepository
+        ImageRepository $imageRepository,
+        CategoryRepository $categoryRepository,
+        Request $request,
+        EntityManagerInterface $em
     ): Response
     {
+        $categories = $categoryRepository->findAll();
 
-        $images = $imageRepository->findAll();
+        $categoryId = $request->query->get('category');
+        $selectedCategory = $categoryId ? $categoryRepository->find($categoryId)
+        : null;
+
+        $images = $selectedCategory ? $imageRepository->findByCategory($selectedCategory)
+        : $imageRepository->findAll();
+        //$images = $imageRepository->findAll();
 
         return $this->render('home/index.html.twig', [
             'images' => $images,
-
+            'selectedCategory' => $selectedCategory,
+            'categories' => $categories,
         ]);
     }
 }
