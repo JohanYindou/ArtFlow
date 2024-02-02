@@ -28,14 +28,11 @@ class Image
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated_at = null;
 
-    #[ORM\ManyToMany(targetEntity: Like::class, mappedBy: 'image')]
-    private Collection $likes;
-
-    #[ORM\OneToMany(mappedBy: 'image', targetEntity: Category::class)]
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'images')]
     private Collection $categories;
 
-    #[ORM\OneToMany(mappedBy: 'image', targetEntity: Tag::class)]
-    private Collection $tags;
+    #[ORM\ManyToMany(targetEntity: Like::class, mappedBy: 'image')]
+    private Collection $likes;
 
     #[ORM\OneToMany(mappedBy: 'image', targetEntity: Comment::class)]
     private Collection $comments;
@@ -44,12 +41,12 @@ class Image
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
-        $this->categories = new ArrayCollection();
-        $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,6 +103,30 @@ class Image
     }
 
     /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Like>
      */
     public function getLikes(): Collection
@@ -127,66 +148,6 @@ class Image
     {
         if ($this->likes->removeElement($like)) {
             $like->removeImage($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): static
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->setImage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        if ($this->categories->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getImage() === $this) {
-                $category->setImage(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Tag>
-     */
-    public function getTags(): Collection
-    {
-        return $this->tags;
-    }
-
-    public function addTag(Tag $tag): static
-    {
-        if (!$this->tags->contains($tag)) {
-            $this->tags->add($tag);
-            $tag->setImage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTag(Tag $tag): static
-    {
-        if ($this->tags->removeElement($tag)) {
-            // set the owning side to null (unless already changed)
-            if ($tag->getImage() === $this) {
-                $tag->setImage(null);
-            }
         }
 
         return $this;
