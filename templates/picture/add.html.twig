@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Picture{% endblock %}
+
+{% block body %}
+    <div class="container w-50">
+        {{ form_start(imageForm) }}
+            {{ form_row(imageForm.title) }}
+            {{ form_row(imageForm.categories) }}
+            {{ form_row(imageForm.path) }}
+            <button type="submit" class="btn btn-primary bg-primary">Submit</button>
+        {{ form_end(imageForm) }}
+    </div>
+{% endblock %}
