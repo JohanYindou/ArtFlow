@@ -11,7 +11,6 @@ use App\Entity\Image;
 use App\Entity\Like;
 use App\Entity\Comment;
 use App\Entity\Category;
-use App\Entity\Tag;
 
 class AppFixtures extends Fixture
 {
@@ -82,36 +81,20 @@ class AppFixtures extends Fixture
 
         // Categories
         $categories = [];
+        $categoriesList = ['Art', 'Architecture', 'Cinema', 'Food', 'Music', 'Travel'];
         for ($i = 0; $i < 5; $i++) {
             $category = new Category();
-            $category->setName($faker->word)
+            $category->setName($faker->randomElement($categoriesList))
                 ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'));
 
             // Associate a category with multiple images
             for ($j = 0; $j < 1; $j++) {
                 $image = $faker->randomElement($images);
-                $category->setImage($image);
+                $category->addImage($image);
             }
 
             $manager->persist($category);
             $categories[] = $category;
-        }
-
-        // Tags
-        $tags = [];
-        for ($i = 0; $i < 5; $i++) {
-            $tag = new Tag();
-            $tag->setName($faker->word)
-                ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'));
-
-            // Associate a tag with multiple images
-            for ($j = 0; $j < 3; $j++) {
-                $image = $faker->randomElement($images);
-                $tag->setImage($image);
-            }
-
-            $manager->persist($tag);
-            $tags[] = $tag;
         }
 
         $manager->flush();
